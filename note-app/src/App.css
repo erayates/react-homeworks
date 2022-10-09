@@ -107,7 +107,7 @@ body{
 }
 
 .btn__delete{
-  position: relative;
+  position: absolute;
   font-weight: bold;
   color: #fff;
   width: 30px;
@@ -116,7 +116,8 @@ body{
   background-color: transparent;
   border: none;
   cursor: pointer;
-  top: 0%;
+  top: 5px;
+  right: 5px;
   margin-left: 1rem;
 }
 
@@ -145,9 +146,10 @@ body{
 }
 
 .note{
+  position: relative;
   color: #fff;
   font-weight: bold;
-  width: 13.5rem;
+  width: 20rem;
   height: auto;
   margin: 0 0.5rem;
   padding: 1rem;

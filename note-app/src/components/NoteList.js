@@ -20,10 +20,13 @@ function NoteList() {
     <div className='note__list'>
         {allNotes.map((item) => {
             return(
+        
             <div key={item.id} className='note' style={{backgroundColor: item.noteColor}}>
-                {item.note}
+                <p>{item.note}</p>
                 <button type="button" className="btn__delete" onClick={() => handleDestroy(item.id)}>X</button>
             </div>
+         
+            
             )
         })}
     </div>
