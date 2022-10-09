@@ -4,6 +4,7 @@ import {addNote} from '../redux/notes/notesSlice'
 
 function AddNote() {
     const [noteColor,setnoteColor] = useState('')
+    const [note,setNote] = useState('')
     const dispatch = useDispatch()
     const handleColor = (e) => {
       e.preventDefault()
@@ -11,13 +12,19 @@ function AddNote() {
     }
     const handleNote = (e) => {
       e.preventDefault()
-      const note = e.currentTarget.value
-      if(note === '' && noteColor === '') return
-      dispatch(addNote({note}))
+      if(note !== '' && noteColor !== ''){
+        dispatch(addNote({note,noteColor}))
+      }
+      resetValues()
+     }
+
+     const resetValues = () => {
+      setNote('')
+      setnoteColor('')
      }
   return (
       <div className='add__note'>
-          <textarea className='text__note' placeholder='Enter your note...' onChange={handleNote}>
+          <textarea className='text__note' placeholder='Enter your note...' value={note} onChange={(e) => setNote(e.currentTarget.value)}>
           </textarea>
           <div className='footer'>
             <div>

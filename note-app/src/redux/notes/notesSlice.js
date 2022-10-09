@@ -3,14 +3,7 @@ import { createSlice, nanoid } from "@reduxjs/toolkit";
 export const notesSlice =  createSlice({
     name:'notes',
     initialState:{
-        items:[{
-            id:'1',
-            note: 'Learn React',
-        },{
-            id: '2',
-            note: 'learn react 2'
-        }],
-        activeFilter: 'all'
+        items:[]
 
     },
     reducers:{
@@ -18,11 +11,12 @@ export const notesSlice =  createSlice({
             reducer: (state,action) => {
                 state.items.push(action.payload)
             },
-            prepare: ({note}) => {
+            prepare: ({note,noteColor}) => {
                 return {
                     payload:{
                         id:nanoid(),
-                        note
+                        note,
+                        noteColor
                     }
                 }
             }

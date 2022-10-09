@@ -1,36 +1,31 @@
 import {useSelector,useDispatch} from 'react-redux'
-import {destroy,addNote,search} from '../redux/notes/notesSlice'
+import {destroy,addNote,search, selectNotes} from '../redux/notes/notesSlice'
 
 
 
 function NoteList() {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const allNotes = useSelector(selectNotes)
     // const filteredNotes = useSelector(search)
     // const handleDestroy = (id) => {
     //     if(window.confirm('Are you sure?')){
     //         dispatch(destroy(id))
     //     }
     // }
+    const handleDestroy = (id) => {
+        if(window.confirm("Are you sure for delete this delete?")) dispatch(destroy({id}))
+    
+    }
   return (
     <div className='note__list'>
-        <div className='note'>
-            Note 1
-        </div>
-        <div className='note'>
-            Note 1
-        </div>
-        <div className='note'>
-            Note 1
-        </div>
-        <div className='note'>
-            Note 1
-        </div>
-        <div className='note'>
-            Note 1
-        </div>
-        <div className='note'>
-            Note 1
-        </div>
+        {allNotes.map((item) => {
+            return(
+            <div key={item.id} className='note' style={{backgroundColor: item.noteColor}}>
+                {item.note}
+                <button type="button" className="btn__delete" onClick={() => handleDestroy(item.id)}>X</button>
+            </div>
+            )
+        })}
     </div>
   )
 }
