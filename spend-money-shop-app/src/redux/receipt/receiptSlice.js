@@ -7,11 +7,12 @@ export const receiptSlice = createSlice({
     },
     reducers:{
         addItemToReceipt: (state,action) => {
-            state.items.push
+            
         }
     }
 }) 
 
 
+export const {addItemToReceipt} = receiptSlice.actions
 export const receipt = state => state.receipt.items
 export default receiptSlice.reducer

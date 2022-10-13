@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 
+
 export const itemsSlice = createSlice({
     name: 'shopItems',
     initialState:{
@@ -60,18 +61,30 @@ export const itemsSlice = createSlice({
                 piece:0
             }
         ],
-        totalMoney: 100000000000
+        totalMoney: 100000000000,
+        selectedItemID: 0
     },
     reducers:{
         setItemPiece: (state,action) => {
             const itemId = action.payload.id
             const filter = state.items.find(item => item.id === itemId)
             filter.piece = action.payload.piece
+            
+        },
+        selectedItem: (state,action) => {
+            const itemId = action.payload.id
+            state.selectedItemID = itemId
         }
+
     }
 })
 
 
 export const selectItems = state => state.shopItems.items
-export const {setItemPiece} = itemsSlice.actions
+
+export const updatedItem = state => state.shopItems.items.find(item => item.id === state.shopItems.selectedItemID)
+
+export const firstSelectedItemID = state => state.shopItems.selectedItemID
+
+export const {setItemPiece,selectedItem} = itemsSlice.actions
 export default itemsSlice.reducer
