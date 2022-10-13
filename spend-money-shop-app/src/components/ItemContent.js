@@ -1,29 +1,27 @@
 import React from 'react'
 import ItemFooter from './ItemFooter'
 
+import {useSelector} from 'react-redux'
+import { selectItems } from '../redux/shop/itemsSlice'
+
 function ItemContent() {
+    const allItems = useSelector(selectItems)
   return (
     <>
-        <div className='item__content'>
-            <img src="https://www.pngkey.com/png/full/168-1682325_for-a-limited-time-your-favourite-burger-the.png" alt='gallery_img'/>
-            <p className='item__title'>Big Mac</p>
-            <ItemFooter />
-        </div>
-        <div className='item__content'>
-            <img src="https://www.pngkey.com/png/full/168-1682325_for-a-limited-time-your-favourite-burger-the.png" alt='gallery_img'/>
-            <p className='item__title'>Big Mac</p>
-            <ItemFooter />
-        </div>
-        <div className='item__content'>
-            <img src="https://www.pngkey.com/png/full/168-1682325_for-a-limited-time-your-favourite-burger-the.png" alt='gallery_img'/>
-            <p className='item__title'>Big Mac</p>
-            <ItemFooter />
-        </div>
-        <div className='item__content'>
-            <img src="https://www.pngkey.com/png/full/168-1682325_for-a-limited-time-your-favourite-burger-the.png" alt='gallery_img'/>
-            <p className='item__title'>Big Mac</p>
-            <ItemFooter />
-        </div>
+        {
+            allItems.map((item) => {
+                return(
+                    <div key={item.id} className='item__content'>
+                        <img src={item.img_url} alt={item.name}/>
+                        <p className='item__title'><strong>{item.name}</strong> ${item.price}</p>
+                        <ItemFooter id={item.id}/>
+                    </div>
+                )
+            })
+        }
+       
+      
+      
     </>
   )
 }

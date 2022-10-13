@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 *{
   box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+ 
 }
 
 body{
@@ -83,11 +87,11 @@ body{
   margin-top: 1rem;
   width: 100px;
   height: 100px;
+  object-fit: contain;
 }
 
 .item__title{
   font-size: 1.2rem;
-  font-weight: bold;
 }
 
 .item__footer{
@@ -124,3 +128,19 @@ body{
   text-align: center;
 }
 
+/********************************
+        Receipt Component
+*********************************/
+.receipt{
+  width: 4  00px;
+}
+
+.receipt__title{
+  text-align: center;
+}
+
+.receipt__item{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

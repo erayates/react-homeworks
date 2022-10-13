@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import TotalMoney from './components/TotalMoney';
 import Items from './components/Items';
+import Receipt from './components/Receipt';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Header/>
       <TotalMoney/>
       <Items/>
+      <Receipt/>
     </div>
   );
 }
