@@ -1,7 +1,8 @@
+import { render } from '@testing-library/react'
 import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {selectedItem, setItemPiece} from '../redux/shop/itemsSlice'
+import {addReceiptList, selectedItem, setItemPiece,setTotalMoney} from '../redux/shop/itemsSlice'
 
 function ItemFooter({id}) {
   const [piece,setPiece] = useState(0)
@@ -9,21 +10,25 @@ function ItemFooter({id}) {
   const dispatch = useDispatch()
 
   const handleInput = (e) => {
-    setPiece(e.target.value)
+    setPiece(e.currentTarget.value)
   }
 
   const setItemAndReceipt = () => {
-    dispatch(setItemPiece({id,piece}))
-    dispatch(selectedItem({id}))
+    if(piece !== 0){
+      dispatch(setItemPiece({id,piece}))
+      dispatch(selectedItem({id}))
+      dispatch(addReceiptList({id,piece}))
+      dispatch(setTotalMoney({id}))
+    }
   }
 
   return (
     <>
       <div className='item__footer'>
-        {!piece ? <button type='button' className='btn btn__sell' disabled>Sell</button> : <button type='button' className='btn btn__sell'>Sell</button>}
-        <input type="number" className='input__piece' min="0" onChange={handleInput}></input>
+        {!piece ? <button type='button' className='btn btn__sell' disabled>Sell</button> : <button type='button' className='btn btn__sell'>Sell</button> }
+        <input type="number" className='input__piece' min="0" value={piece} onChange={handleInput}></input>
         <button type='button' className='btn btn__buy' onClick={setItemAndReceipt}>Buy</button>
-      </div>
+    </div>
     </>
     
   )

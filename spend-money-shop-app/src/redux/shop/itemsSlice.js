@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice, nanoid} from '@reduxjs/toolkit'
 
 
 export const itemsSlice = createSlice({
@@ -61,6 +61,7 @@ export const itemsSlice = createSlice({
                 piece:0
             }
         ],
+        receiptItems:[],
         totalMoney: 100000000000,
         selectedItemID: 0
     },
@@ -74,6 +75,21 @@ export const itemsSlice = createSlice({
         selectedItem: (state,action) => {
             const itemId = action.payload.id
             state.selectedItemID = itemId
+        },
+        addReceiptList: (state,action) => {
+            const receiptID = nanoid()
+            const itemId = action.payload.id
+            const filter = state.items.find(item => item.id === itemId)
+            const itemName = filter.name
+            const itemPiece = filter.piece
+            const itemPrice = filter.price
+            const totalPrice = action.payload.piece * itemPrice
+            state.receiptItems.push({receiptID,itemName,itemPiece,totalPrice})
+        },
+        setTotalMoney: (state,action) => {
+            const itemId = action.payload.id
+            const filter = state.items.find(item => item.id === itemId)
+            state.totalMoney = state.totalMoney - filter.price * filter.piece
         }
 
     }
@@ -86,5 +102,9 @@ export const updatedItem = state => state.shopItems.items.find(item => item.id =
 
 export const firstSelectedItemID = state => state.shopItems.selectedItemID
 
-export const {setItemPiece,selectedItem} = itemsSlice.actions
+export const receiptList = state => state.shopItems.receiptItems
+
+export const totalMoney = state => state.shopItems.totalMoney
+
+export const {setItemPiece,selectedItem,addReceiptList,setTotalMoney} = itemsSlice.actions
 export default itemsSlice.reducer
