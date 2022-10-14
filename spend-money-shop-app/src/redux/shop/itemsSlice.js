@@ -89,8 +89,12 @@ export const itemsSlice = createSlice({
         setTotalMoney: (state,action) => {
             const itemId = action.payload.id
             const filter = state.items.find(item => item.id === itemId)
-            state.totalMoney = state.totalMoney - filter.price * filter.piece
-        }
+            if(filter.price * filter.piece > state.totalMoney){
+                window.alert("You don't have enough balance.")
+            }else{
+                state.totalMoney = state.totalMoney - filter.price * filter.piece
+            }
+        },
 
     }
 })

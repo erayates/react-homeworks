@@ -19,9 +19,6 @@ function ItemContent() {
                 )
             })
         }
-       
-      
-      
     </>
   )
 }

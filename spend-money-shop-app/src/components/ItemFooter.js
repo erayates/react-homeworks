@@ -2,23 +2,30 @@ import { render } from '@testing-library/react'
 import {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {addReceiptList, selectedItem, setItemPiece,setTotalMoney} from '../redux/shop/itemsSlice'
+import {addReceiptList, firstSelectedItemID, selectedItem, setItemPiece,setTotalMoney, totalMoney, updatedItem} from '../redux/shop/itemsSlice'
 
 function ItemFooter({id}) {
   const [piece,setPiece] = useState(0)
-  
+ 
   const dispatch = useDispatch()
+  const money = useSelector(totalMoney)
+  const item = useSelector(firstSelectedItemID)
+
 
   const handleInput = (e) => {
     setPiece(e.currentTarget.value)
   }
 
+  const boughtItem = useSelector(updatedItem)
   const setItemAndReceipt = () => {
     if(piece !== 0){
-      dispatch(setItemPiece({id,piece}))
       dispatch(selectedItem({id}))
-      dispatch(addReceiptList({id,piece}))
+      dispatch(setItemPiece({id,piece}))
       dispatch(setTotalMoney({id}))
+    
+      if(boughtItem.price*boughtItem.piece < money){
+        dispatch(addReceiptList({id,piece}))
+      }
     }
   }
 
