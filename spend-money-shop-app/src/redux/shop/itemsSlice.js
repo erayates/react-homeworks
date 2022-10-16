@@ -1,4 +1,4 @@
-import {createSlice, nanoid} from '@reduxjs/toolkit'
+import {createSlice, nanoid,current} from '@reduxjs/toolkit'
 
 
 export const itemsSlice = createSlice({
@@ -83,8 +83,11 @@ export const itemsSlice = createSlice({
             const itemName = filter.name
             const itemPiece = filter.piece
             const itemPrice = filter.price
-            const totalPrice = action.payload.piece * itemPrice
-            state.receiptItems.push({receiptID,itemName,itemPiece,totalPrice})
+            if(itemPiece !== 0){
+                const totalPrice = action.payload.piece * itemPrice
+                state.receiptItems.push({receiptID,itemId,itemName,itemPiece,totalPrice})
+            }
+     
         },
         setTotalMoney: (state,action) => {
             const itemId = action.payload.id
@@ -95,6 +98,25 @@ export const itemsSlice = createSlice({
                 state.totalMoney = state.totalMoney - filter.price * filter.piece
             }
         },
+        sellItemSetReceipt: (state,action) => {
+            const itemId = action.payload.id
+            const filter = current(state).receiptItems.filter((item) => item.itemId === itemId)
+            let totalSellMoney = 0
+            if(filter !== []){
+                if(window.confirm(`Do you want to ${filter[0].itemName} items?`)){
+                    filter.map((item) => {
+                        if(item.itemName !== undefined){
+                            totalSellMoney = totalSellMoney + item.totalPrice
+                        }
+                    })
+                    state.receiptItems = state.receiptItems.filter(item => item.itemName !== filter[0].itemName)
+                    state.totalMoney = state.totalMoney + totalSellMoney
+                }
+            }
+            
+          
+           
+        }
 
     }
 })
@@ -110,5 +132,5 @@ export const receiptList = state => state.shopItems.receiptItems
 
 export const totalMoney = state => state.shopItems.totalMoney
 
-export const {setItemPiece,selectedItem,addReceiptList,setTotalMoney} = itemsSlice.actions
+export const {setItemPiece,selectedItem,addReceiptList,setTotalMoney,sellItemSetReceipt} = itemsSlice.actions
 export default itemsSlice.reducer
